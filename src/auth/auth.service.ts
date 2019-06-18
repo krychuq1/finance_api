@@ -10,7 +10,7 @@ export class AuthService {
 
   async createToken(loginUserDto: LoginUserDto) {
     const user = await this.userService.login(loginUserDto);
-    const payload: JwtPayload = { login: user.login };
+    const payload: JwtPayload = { login: user.login, userId: user._id };
     const accessToken = this.jwtService.sign(payload);
     return {
       expiresIn: 3600,
@@ -19,9 +19,10 @@ export class AuthService {
   }
 
   async validate(payload: JwtPayload): Promise<any> {
-    // put some validation logic here
-    // for example query user by id/email/username
-    console.log(payload);
-    return {};
+    // get user from database based on email
+    // return user objectId else reject ;)
+    // const user = await this.userService.findByLogin(payload.login);
+    // console.log(user);
+    return payload;
   }
 }

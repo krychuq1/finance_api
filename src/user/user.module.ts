@@ -9,7 +9,7 @@ import { PasswordService } from './password.service';
   imports: [DatabaseModule],
   controllers: [UserController],
   providers: [UsersService, PasswordService, ...usersProviders],
-  exports: [UsersService],
+  exports: [UsersService, ...usersProviders],
 })
 
 export class UserModule {}

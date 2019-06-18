@@ -20,9 +20,10 @@ export class UsersService {
   }
   async login(user: LoginUserDto): Promise<IUser> {
     const userM = await this.findByLogin(user.login);
+    // console.log(userM)
     if (userM) {
       if (await this.passwordService.comparePassword(user.password, userM.password)) {
-        return user;
+        return userM;
       } else {
         throw new UnauthorizedException();
       }

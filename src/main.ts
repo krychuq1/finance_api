@@ -7,6 +7,7 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('Finance api')
     .setDescription('Simple finance api')
+    .addBearerAuth()
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, options);
