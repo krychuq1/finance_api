@@ -1,14 +1,19 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { IUser } from './interfaces/user.interface';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PasswordService } from './password.service';
 import { LoginUserDto } from './dto/login-user.dto';
-
+import { MetalService } from '../metal/metal.service';
+import { IMetalSummary } from '../metal/interfaces/IMetalSummary';
+// @Inject(forwardRef(() => MetalService))
+// private readonly metalService: MetalService
 @Injectable()
 export class UsersService {
   constructor(@Inject('USER_MODEL') private readonly userModel: Model<IUser>,
-              private readonly passwordService: PasswordService) {}
+              private readonly passwordService: PasswordService,
+              private readonly metalService: MetalService
+             ) {}
   async create(createUserDto: CreateUserDto): Promise<IUser> {
     createUserDto.password = await this.passwordService.hashPassword(createUserDto.password);
     const createdUser = new this.userModel(createUserDto);
@@ -34,10 +39,16 @@ export class UsersService {
   async findByLogin(login: string): Promise<IUser> {
     return await this.userModel.findOne({login});
   }
-  async findAll(): Promise<IUser> {
-    try{
-      const res = await this.userModel.find().exec();
-      return res;
+  async findAll(id: string): Promise<IMetalSummary> {
+    try {
+      // return await
+      // get metals
+      const res = await this.userModel.findById(id).populate('metals').exec();
+      // console.log(res.metals);
+      return await this.metalService.getTotalPriceForMetals(res.metals);
+
+      // get total for metals
+
     } catch (e) {
       return e;
     }

@@ -12,7 +12,7 @@ export class AuthController {
 
   @Post('login')
   async createToken(@Body() login: LoginUserDto): Promise<any> {
-    return await this.authService.createToken(login);;
+    return await this.authService.createToken(login);
   }
   // @ApiBearerAuth()
   @Get('data')

@@ -1,7 +1,7 @@
 import { HttpModule, Module } from '@nestjs/common';
 import { MetalController } from './metal.controller';
 import { MetalService } from './metal.service';
-import { silverProvider } from './providers/silver.provider';
+import { metalProvider } from './providers/metal.provider';
 import { DatabaseModule } from '../database/database.module';
 import { PassportModule } from '@nestjs/passport';
 import { UserModule } from '../user/user.module';
@@ -11,7 +11,8 @@ import { UserModule } from '../user/user.module';
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [MetalController],
-  providers: [MetalService, ...silverProvider],
+  providers: [...metalProvider, MetalService],
+  exports: [MetalService],
 })
 export class MetalModule {
 
