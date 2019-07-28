@@ -8,6 +8,7 @@ import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import * as dotenv from 'dotenv';
 import { AuthModule } from './auth/auth.module';
+import { EventsGateway } from './socket/events.gateway';
 
 dotenv.config();
 
@@ -15,6 +16,6 @@ dotenv.config();
   imports: [DatabaseModule, HttpModule, CryptoModule, MetalModule, StockModule,
     UserModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, EventsGateway],
 })
 export class AppModule {}

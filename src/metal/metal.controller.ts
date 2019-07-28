@@ -9,9 +9,9 @@ import { AuthGuard } from '@nestjs/passport';
 export class MetalController {
   constructor(private readonly metalService: MetalService) {}
   @Get('/silver')
-  async getSilverPrice(): Promise<object> {
+  async getSilverPrice(): Promise<number> {
     const res = await this.metalService.getMetalPrice(metal.silver);
-    return res.data;
+    return res;
   }
   @Post('/silver')
   @UseGuards(AuthGuard())
@@ -23,7 +23,8 @@ export class MetalController {
   @Get('/gold')
   async getGoldPrice(): Promise<object> {
     const res = await this.metalService.getMetalPrice(metal.gold);
-    return res.data[0].spreadProfilePrices[0].ask;
+    // return res.data[0].spreadProfilePrices[0].ask;
+    return {};
   }
   @Post('/gold')
   @UseGuards(AuthGuard())

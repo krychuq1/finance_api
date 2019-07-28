@@ -11,17 +11,17 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  async createToken(@Body() login: LoginUserDto): Promise<any> {
+  async createToken(@Body() login: LoginUserDto, @Req() request): Promise<any> {
     return await this.authService.createToken(login);
   }
   // @ApiBearerAuth()
-  @Get('data')
-  @UseGuards(AuthGuard())
-  findAll(@Req() request ) {
-    return 'works';
-    // this route is restricted by AuthGuard
-    // JWT strategy
-  }
+  // @Get('data')
+  // @UseGuards(AuthGuard())
+  // findAll(@Req() request ) {
+  //   return 'works';
+  //   // this route is restricted by AuthGuard
+  //   // JWT strategy
+  // }
   getPayload() {
 
   }

@@ -15,6 +15,9 @@ export class AuthService {
     return {
       expiresIn: '24h',
       accessToken,
+      user: {
+        login: user.login,
+      },
     };
   }
 
