@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import * as dotenv from 'dotenv';
 import { AuthModule } from './auth/auth.module';
 import { EventsGateway } from './socket/events.gateway';
+import { SocketCron } from './socket/socket.cron';
 
 dotenv.config();
 
@@ -16,6 +17,6 @@ dotenv.config();
   imports: [DatabaseModule, HttpModule, CryptoModule, MetalModule, StockModule,
     UserModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService, EventsGateway],
+  providers: [AppService, SocketCron, EventsGateway],
 })
 export class AppModule {}

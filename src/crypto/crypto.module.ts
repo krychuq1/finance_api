@@ -6,5 +6,7 @@ import { CryptoService } from './crypto.service';
   imports: [HttpModule],
   controllers: [CryptoController],
   providers: [CryptoService],
+  exports: [CryptoService],
+
 })
 export class CryptoModule {}
