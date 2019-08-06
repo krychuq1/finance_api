@@ -16,7 +16,5 @@ export class StockScraperService {
         reject('error wrong symbol');
       });
     }));
-
-
   }
 }

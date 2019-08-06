@@ -1,11 +1,10 @@
 import { OnGatewayConnection, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer, WsResponse } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { CryptoService } from '../crypto/crypto.service';
 import { SocketCron } from './socket.cron';
 
 @WebSocketGateway()
 export class EventsGateway implements OnGatewayInit, OnGatewayConnection {
-  constructor(private socketCron: SocketCron, private cryptoService: CryptoService) {}
+  constructor(private socketCron: SocketCron) {}
   @WebSocketServer()
   webServer: Server;
 
@@ -21,13 +20,20 @@ export class EventsGateway implements OnGatewayInit, OnGatewayConnection {
    sendMultiPrice(client: Socket, cryptoList: string): void {
     // console.log(data);
     // const res = await this.cryptoService.getMultiplePrice('BTC,ETH', 'USD');
-    this.socketCron.getCryptoMultiPrices(client, this.cryptoService, cryptoList);
+    this.socketCron.getCryptoMultiPrices(client, cryptoList);
     // console.log('we should send multi crypto ', res);
 
   }
-
+  @SubscribeMessage('getMultiMetalPrice')
+  sendMultiMetalPrice(client: Socket): void {
+     this.socketCron.getMetalsPrices(client);
+  }
+  @SubscribeMessage('getMultiStockPrice')
+  sendMultiStockPrice(client: Socket, symbols: string[]): void {
+    this.socketCron.getStockPrices(client, symbols);
+  }
   afterInit(): any {
     // console.log(this.socketCron.getCryptoMultiPrices());
-    console.log('socket init');
+    // console.log('socket init');
   }
 }

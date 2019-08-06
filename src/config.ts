@@ -5,3 +5,4 @@ export const urls = {
   crypto_price_multi: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=',
   polishStock: 'https://www.biznesradar.pl/notowania/',
 };
+export const timeZone = 'Poland';

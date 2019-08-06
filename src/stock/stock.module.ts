@@ -7,6 +7,7 @@ import { StockService } from './stock.service';
   imports: [HttpModule],
   controllers: [StockController],
   providers: [StockScraperService, StockService],
+  exports: [StockService],
 })
 export class StockModule {
 }

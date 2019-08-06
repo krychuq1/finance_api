@@ -6,10 +6,10 @@ import { MetalModule } from './metal/metal.module';
 import { StockModule } from './stock/stock.module';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
-import * as dotenv from 'dotenv';
 import { AuthModule } from './auth/auth.module';
 import { EventsGateway } from './socket/events.gateway';
 import { SocketCron } from './socket/socket.cron';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 

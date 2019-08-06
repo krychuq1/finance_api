@@ -28,6 +28,7 @@ export class MetalService {
     // return this.httpService.get(urls.silver)
   }
   async getTotalPriceForMetals(metals: IMetal[]): Promise<IMetalSummary> {
+    // console.log('here');
     const metalSummary = new MetalSummaryDto();
     for(const obj of metals) {
       const price = await this.getMetalPrice(metal[obj.type]);
@@ -37,6 +38,7 @@ export class MetalService {
       metalSummary[obj.type].oz = obj.oz;
     }
     metalSummary.roundTotal(2);
+    // console.log(metalSummary);
     return metalSummary;
 
   }
