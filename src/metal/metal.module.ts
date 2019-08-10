@@ -5,11 +5,10 @@ import { metalProvider } from './providers/metal.provider';
 import { DatabaseModule } from '../database/database.module';
 import { PassportModule } from '@nestjs/passport';
 import { UserModule } from '../user/user.module';
-
+// UserModule,
+// PassportModule.register({ defaultStrategy: 'jwt' }
 @Module({
-  imports: [HttpModule, DatabaseModule, UserModule,
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-  ],
+  imports: [HttpModule, DatabaseModule],
   controllers: [MetalController],
   providers: [...metalProvider, MetalService],
   exports: [MetalService],

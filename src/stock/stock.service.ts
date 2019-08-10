@@ -2,6 +2,7 @@ import { HttpService, Injectable } from '@nestjs/common';
 import { urls } from '../config';
 import { StockScraperService } from './stock-scraper/stock-scraper.service';
 import { async } from 'rxjs/internal/scheduler/async';
+import { IStock } from './IStock';
 
 @Injectable()
 export class StockService {
@@ -9,8 +10,10 @@ export class StockService {
               private readonly httpService: HttpService) {
   }
 
-  async getStockValue(symbol: string) {
-    return await this.stockScraperService.getStockValue(symbol);
+  async getStockValue(symbol: string): Promise<IStock> {
+    const res = await this.stockScraperService.getStockValue(symbol);
+    return {symbol, currency: 'pln', price: Number(res)};
+
   }
   async getMultipleStockValue(symbols: string[]) {
     const values: object[] = [];

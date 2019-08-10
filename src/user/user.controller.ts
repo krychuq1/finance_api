@@ -13,17 +13,17 @@ export class UserController {
   async create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
-  @ApiBearerAuth()
-  @Get('/total')
-  @UseGuards(AuthGuard())
-  async getTotal(@Req() request): Promise<IMetalSummary> {
-    return this.userService.findAll(request.user.userId);
-  }
-  @ApiBearerAuth()
-  @Get('/info')
-  @UseGuards(AuthGuard())
-  async getUser(@Req() request) {
-    console.log(request);
-  }
+  // @ApiBearerAuth()
+  // @Get('/total')
+  // @UseGuards(AuthGuard())
+  // async getTotal(@Req() request): Promise<IMetalSummary> {
+  //   return this.userService.findAll(request.user.userId);
+  // }
+  // @ApiBearerAuth()
+  // @Get('/info')
+  // @UseGuards(AuthGuard())
+  // async getUser(@Req() request) {
+  //   console.log(request);
+  // }
 
 }
