@@ -2,6 +2,10 @@ import { OnGatewayConnection, OnGatewayInit, SubscribeMessage, WebSocketGateway,
 import { Server, Socket } from 'socket.io';
 import { SocketCron } from './socket.cron';
 
+export interface ISocketCurrency {
+  base: string;
+  symbols: string;
+}
 @WebSocketGateway()
 export class EventsGateway implements OnGatewayInit, OnGatewayConnection {
   constructor(private socketCron: SocketCron) {}
@@ -31,6 +35,10 @@ export class EventsGateway implements OnGatewayInit, OnGatewayConnection {
   @SubscribeMessage('getMultiStockPrice')
   sendMultiStockPrice(client: Socket, symbols: string[]): void {
     this.socketCron.getStockPrices(client, symbols);
+  }
+  @SubscribeMessage('getCurrencies')
+  sendCurrencies(client: Socket, data: ISocketCurrency): void {
+    this.socketCron.getCurrencies(client, data);
   }
   afterInit(): any {
     // console.log(this.socketCron.getCryptoMultiPrices());

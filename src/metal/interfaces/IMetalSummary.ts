@@ -1,12 +1,8 @@
+import { metal } from '../metal.service';
+
 export interface IMetalSummary {
+  type: metal;
+  oz: number;
+  pricePerOz: number;
   total: number;
-  silver: {
-    oz: number;
-    total: number;
-  };
-  gold: {
-    oz: number;
-    total: number;
-  };
-  roundTotal(fixTo: number): void;
 }

@@ -15,13 +15,12 @@ export class StockService {
     return {symbol, currency: 'pln', price: Number(res)};
 
   }
-  async getMultipleStockValue(symbols: string[]) {
-    const values: object[] = [];
+  async getMultipleStockValue(symbols: string[]): Promise<IStock[]> {
+    const values: IStock[] = [];
     for (let i = 0; i < symbols.length; i++) {
       const res = await this.stockScraperService.getStockValue(symbols[i]);
-      values.push({symbol: symbols[i], price: res});
+      values.push({symbol: symbols[i], price: Number(res), currency: 'PLN'});
     }
-    // console.log(values, ' values');
     return values;
   }
 }

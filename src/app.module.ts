@@ -9,13 +9,14 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { EventsGateway } from './socket/events.gateway';
 import { SocketCron } from './socket/socket.cron';
+import { CurrencyModule } from './currency/currency.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
 @Module({
   imports: [DatabaseModule, HttpModule, CryptoModule, MetalModule, StockModule,
-    UserModule, AuthModule],
+    UserModule, AuthModule, CurrencyModule],
   controllers: [AppController],
   providers: [AppService, SocketCron, EventsGateway],
 })

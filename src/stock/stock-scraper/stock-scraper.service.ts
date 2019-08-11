@@ -13,7 +13,7 @@ export class StockScraperService {
         const $ = cheerio.load(res.data);
         resolve($('.profile_quotation span.q_ch_act').text());
       }, error => {
-        reject('error wrong symbol');
+        reject('error wrong symbol ' + symbol);
       });
     }));
   }

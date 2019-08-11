@@ -1,9 +1,6 @@
 import { HttpService, Inject, Injectable } from '@nestjs/common';
 import { urls } from '../config';
-import { IMetal } from './interfaces/IMetal';
 import { Model } from 'mongoose';
-import { IMetalSummary } from './interfaces/IMetalSummary';
-import { MetalSummaryDto } from './dto/metalSummary.dto';
 import { MetalDto } from './dto/metal.dto';
 
 export enum metal {
@@ -17,6 +14,7 @@ export class MetalService {
               @Inject('METAL_MODEL') private readonly metalModel: Model<MetalDto> ) {}
    async getMetalPrice(metalName: metal): Promise<MetalDto> {
     const url: string = urls[metalName];
+    console.log('here, ', url, metalName);
     const res = await this.httpService.get(url).toPromise();
     return new MetalDto(1, res.data[0].spreadProfilePrices[0].bid, metalName);
   }

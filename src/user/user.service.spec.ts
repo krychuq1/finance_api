@@ -1,16 +1,17 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from './user.controller';
-import { DatabaseModule } from '../database/database.module';
 import { UsersService } from './users.service';
+import { DatabaseModule } from '../database/database.module';
 import { PasswordService } from './password.service';
 import { forwardRef } from '@nestjs/common';
 import { MetalModule } from '../metal/metal.module';
+import { Test, TestingModule } from '@nestjs/testing';
 import { PassportModule } from '@nestjs/passport';
 import { usersProviders } from './users.providers';
+import { UserController } from './user.controller';
+import { StockService } from '../stock/stock.service';
+import { async } from 'rxjs/internal/scheduler/async';
 
-describe('User Controller', () => {
-  let controller: UserController;
-
+describe('StockService', () => {
+  let service: UsersService;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
@@ -22,10 +23,13 @@ describe('User Controller', () => {
       providers: [UsersService, PasswordService, ...usersProviders]
     }).compile();
 
-    controller = module.get<UserController>(UserController);
+    service = module.get<UsersService>(UsersService);
   });
-
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(service).toBeDefined();
+  });
+  it('should return all user info', async () => {
+    const res = await service.findAll('5d0ffa5ff325253f48e4d0d6');
+    expect(res.login.length).toBeGreaterThanOrEqual(1);
   });
 });

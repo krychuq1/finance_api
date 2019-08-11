@@ -25,4 +25,9 @@ describe('StockService', () => {
     const res = await service.getStockValue('PKN');
     expect(res.symbol).toBe('PKN');
   });
+  it('should return array of stocks', async () => {
+    const res = await service.getMultipleStockValue(['PKN', 'CDR']);
+    expect(res.length).toBe(2);
+    expect(res[0].price).toBeGreaterThanOrEqual(1);
+  });
 });

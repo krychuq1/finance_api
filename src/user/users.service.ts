@@ -6,6 +6,7 @@ import { PasswordService } from './password.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { MetalService } from '../metal/metal.service';
 import { IMetalSummary } from '../metal/interfaces/IMetalSummary';
+import { IUserSummary } from './interfaces/IUserSummary';
 // @Inject(forwardRef(() => MetalService))
 // private readonly metalService: MetalService
 @Injectable()
@@ -39,16 +40,17 @@ export class UsersService {
   async findByLogin(login: string): Promise<IUser> {
     return await this.userModel.findOne({login});
   }
-  async findAll(id: string): Promise<IMetalSummary> {
+// : Promise<IMetalSummary>
+  async findAll(id: string): Promise<IUserSummary> {
     try {
-      // return await
-      // get metals
       const res = await this.userModel.findById(id).populate('metals').exec();
-      // console.log(res.metals);
-      return await this.metalService.getTotalPriceForMetals(res.metals);
-
-      // get total for metals
-
+      const userSummary: IUserSummary = {login: res.login, metals: []};
+      for(let i = 0; i < res.metals.length; i++) {
+        const price = await this.metalService.getMetalPrice(res.metals[i].type).then(val => {return val.price});
+        const o: IMetalSummary = {type: res.metals[i].type, oz: res.metals[i].oz, pricePerOz: price, total: res.metals[i].oz * price};
+        userSummary.metals.push(o);
+      }
+      return userSummary;
     } catch (e) {
       return e;
     }
