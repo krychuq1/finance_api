@@ -11,7 +11,7 @@ export class MetalController {
   @Get('/silver')
   async getSilverPrice(): Promise<number> {
     const res = await this.metalService.getMetalPrice(metal.silver);
-    return res;
+    return res.price;
   }
   @Post('/silver')
   @UseGuards(AuthGuard())

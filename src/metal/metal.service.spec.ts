@@ -28,5 +28,8 @@ describe('MetalService', () => {
   it('check if correct array', async () => {
     const res = await service.getMultiPricesForMetals([metal.silver, metal.gold]);
     expect(res[0].price).toBeGreaterThanOrEqual(1);
+  });
+  it('should add metal to user', async () => {
+    service.addMetal(metal.silver, 1, '');
   })
 });

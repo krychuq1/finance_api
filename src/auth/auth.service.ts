@@ -15,9 +15,7 @@ export class AuthService {
     return {
       expiresIn: '24h',
       accessToken,
-      user: {
-        login: user.login,
-      },
+      user: await this.userService.findAll(user._id),
     };
   }
 

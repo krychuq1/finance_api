@@ -26,25 +26,25 @@ export class MetalService {
     }
     return metalsToReturn;
   }
-  // async addMetal(type: metal, oz: number, userId: string) {
-  //   // get document from db
-  //   const res = await this.metalModel.findOne({user: userId, type}).exec();
-  //   // check if user has metal document
-  //   if (res) {
-  //     // update document
-  //     await res.updateOne({oz: res.oz + oz}).exec();
-  //     return {oz: res.oz + oz};
-  //   } else {
-  //     const addedMetal = this.metalModel({oz, user: userId, type});
-  //     // save metal
-  //     await addedMetal.save();
-  //     // get and update user with metal
-  //     const user = await this.userModel.findById({_id: userId});
-  //     user.metals.push(addedMetal);
-  //     await user.save();
-  //     return {oz};
-  //   }
-  // }
+  async addMetal(type: metal, oz: number, userId: string) {
+    // get document from db
+    const res = await this.metalModel.findOne({user: userId, type}).exec();
+    // check if user has metal document
+    if (res) {
+      // update document
+      await res.updateOne({oz: res.oz + oz}).exec();
+      return {oz: res.oz + oz};
+    } else {
+      // const addedMetal = this.metalModel({oz, user: userId, type});
+      // save metal
+      // await addedMetal.save();
+      // get and update user with metal
+      // const user = await this.userModel.findById({_id: userId});
+      // user.metals.push(addedMetal);
+      // await user.save();
+      // return {oz};
+    }
+  }
   // async addSilver(oz: number, userId: string) {
   //   // find and update
   //  const res = await this.silverModel.findOne({user: userId}).exec();
