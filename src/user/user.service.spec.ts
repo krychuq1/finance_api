@@ -7,10 +7,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PassportModule } from '@nestjs/passport';
 import { usersProviders } from './users.providers';
 import { UserController } from './user.controller';
-import { StockService } from '../stock/stock.service';
-import { async } from 'rxjs/internal/scheduler/async';
 
-describe('StockService', () => {
+describe('UserService', () => {
   let service: UsersService;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -31,5 +29,10 @@ describe('StockService', () => {
   it('should return all user info', async () => {
     const res = await service.findAll('5d0ffa5ff325253f48e4d0d6');
     expect(res.login.length).toBeGreaterThanOrEqual(1);
+  });
+  it('should add metal to user', async () => {
+    const res = await service.addMetal('a');
+    console.log(res);
+
   });
 });

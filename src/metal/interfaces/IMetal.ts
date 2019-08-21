@@ -1,6 +1,7 @@
+import { Schema } from 'mongoose';
+
 export interface IMetal {
   oz: number;
-  price: number;
   type: string;
-  roundTotal(fixTo: number);
+  userId: Schema.Types.ObjectId;
 }

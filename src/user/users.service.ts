@@ -1,12 +1,13 @@
-import { forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { IUser } from './interfaces/user.interface';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PasswordService } from './password.service';
 import { LoginUserDto } from './dto/login-user.dto';
-import { MetalService } from '../metal/metal.service';
+import { metal, MetalService } from '../metal/metal.service';
 import { IMetalSummary } from '../metal/interfaces/IMetalSummary';
 import { IUserSummary } from './interfaces/IUserSummary';
+import { MetalDto } from '../metal/dto/metal.dto';
 // @Inject(forwardRef(() => MetalService))
 // private readonly metalService: MetalService
 @Injectable()
@@ -37,22 +38,31 @@ export class UsersService {
       throw new UnauthorizedException();
     }
   }
+  async addMetal(metalDto: MetalDto): Promise<any> {
+    const user = await this.userModel.findById(metalDto.userId);
+    const metalRes = await this.metalService.addMetal(metalDto);
+    user.metals.push(metalRes);
+    await user.save();
+    return user;
+
+  }
+
   async findByLogin(login: string): Promise<IUser> {
     return await this.userModel.findOne({login});
   }
-// : Promise<IMetalSummary>
   async findAll(id: string): Promise<IUserSummary> {
-    try {
-      const res = await this.userModel.findById(id).populate('metals').exec();
-      const userSummary: IUserSummary = {login: res.login, metals: []};
-      for(let i = 0; i < res.metals.length; i++) {
-        const price = await this.metalService.getMetalPrice(res.metals[i].type).then(val => {return val.price});
-        const o: IMetalSummary = {type: res.metals[i].type, oz: res.metals[i].oz, pricePerOz: price, total: res.metals[i].oz * price};
-        userSummary.metals.push(o);
-      }
-      return userSummary;
-    } catch (e) {
-      return e;
-    }
+    // try {
+    //   const res = await this.userModel.findById(id).populate('metals').exec();
+    //   const userSummary: IUserSummary = {login: res.login, metals: []};
+    //   for(let i = 0; i < res.metals.length; i++) {
+    //     const price = await this.metalService.getMetalPrice(res.metals[i].type).then(val => {return val.price});
+    //     const o: IMetalSummary = {type: res.metals[i].type, oz: res.metals[i].oz, pricePerOz: price, total: res.metals[i].oz * price};
+    //     userSummary.metals.push(o);
+    //   }
+    //   return userSummary;
+    // } catch (e) {
+    //   return e;
+    // }
+    return;
   }
 }
