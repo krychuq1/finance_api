@@ -1,24 +1,31 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiBearerAuth, ApiUseTags } from '@nestjs/swagger';
 import { metal, MetalService } from './metal.service';
-import { MetalDto } from './dto/metal.dto';
-import { AuthGuard } from '@nestjs/passport';
+
+// import { AuthGuard } from '@nestjs/passport';
 @ApiUseTags('metal')
 @ApiBearerAuth()
 @Controller('metal')
 export class MetalController {
   constructor(private readonly metalService: MetalService) {}
   @Get('/silver')
-  async getSilverPrice(): Promise<number> {
+  async getSilverPrice(): Promise<any> {
     const res = await this.metalService.getMetalPrice(metal.silver);
-    return res.price;
+    console.log(res);
+    return res;
   }
-  @Post('/silver')
-  @UseGuards(AuthGuard())
-  async addSilver(@Body() metalDto: MetalDto, @Req() request): Promise<any> {
-   return await this.metalService.addMetal(metal.silver, metalDto.oz, request.user.userId);
-
+  @Get('/all')
+  async getAllMetalPrices(): Promise<any> {
+    const array = [metal.silver, metal.gold];
+    return await this.metalService.getMultiPricesForMetals(array);
   }
+  // @Post('/silver')
+  // @UseGuards(AuthGuard())
+  // async addSilver(@Body() metalDto: MetalDto, @Req() request): Promise<any> {
+  //   return {};
+  //  // return await this.metalService.addMetal(metal.silver, metalDto.oz, request.user.userId);
+  //
+  // }
 
   @Get('/gold')
   async getGoldPrice(): Promise<object> {
@@ -26,9 +33,10 @@ export class MetalController {
     // return res.data[0].spreadProfilePrices[0].ask;
     return {};
   }
-  @Post('/gold')
-  @UseGuards(AuthGuard())
-  async addGold(@Body() metalDto: MetalDto, @Req() request): Promise<any> {
-    return this.metalService.addMetal(metal.gold, metalDto.oz, request.user.userId);
-  }
+  // @Post('/gold')
+  // @UseGuards(AuthGuard())
+  // async addGold(@Body() metalDto: MetalDto, @Req() request): Promise<any> {
+  //   // return this.metalService.addMetal(metal.gold, metalDto.oz, request.user.userId);
+  //   return {};
+  // }
 }

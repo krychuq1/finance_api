@@ -3,7 +3,7 @@ import { metal, MetalService } from './metal.service';
 // import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { forwardRef, HttpModule } from '@nestjs/common';
-import { DatabaseModule } from '../database/database.module';
+// import { DatabaseModule } from '../database/database.module';
 import { metalProvider } from './providers/metal.provider';
 import { MetalController } from './metal.controller';
 import { async } from 'rxjs/internal/scheduler/async';
@@ -13,7 +13,7 @@ describe('MetalService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [HttpModule, DatabaseModule],
+      imports: [HttpModule],
       controllers: [MetalController],
       providers: [...metalProvider, MetalService],
     }).compile();

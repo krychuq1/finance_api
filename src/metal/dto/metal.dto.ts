@@ -7,11 +7,11 @@ export class MetalDto  {
   oz: number;
   @ApiModelProperty()
   type: string;
-  userId: string;
-
-  constructor(oz: number, type: string, userId: Schema.Types.ObjectId) {
+  userId?: string;
+  price: string;
+  constructor(oz: number, price: string, type: Schema.Types.ObjectId) {
     this.oz = oz;
+    this.price = price;
     this.type = type;
-    this.userId = userId;
   }
 }
